@@ -1,0 +1,23 @@
+{
+  "name": "stock-tracking-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyleCroxall/stock-tracking-site.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KyleCroxall/stock-tracking-site/issues"
+  },
+  "homepage": "https://github.com/KyleCroxall/stock-tracking-site#readme"
+}
