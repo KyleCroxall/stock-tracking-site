@@ -1,4 +1,4 @@
-const apiKey = 'c3nalmqad3iabnjj6co0';
+const apiKey = '';
 
 function fetchLatestQuote (ticker) {
     fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${apiKey}`)
