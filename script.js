@@ -1,4 +1,5 @@
-const apiKey = 'c3peufaad3ifkq8grbs0';
+const apiKey = '';
+const etfs = ['SPY', 'QQQ', 'IWM', 'DIA']
 
 async function fetchLatestQuote (ticker) {
     const url = `https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${apiKey}`
@@ -11,23 +12,33 @@ async function fetchLatestQuote (ticker) {
         lowPrice: tickerData.l,
         currentPrice: tickerData.c,
         previousClose: tickerData.pc,
-    }
-    console.log(formattedQuote)
+    };
+    console.log(formattedQuote);
+    return formattedQuote;
+}
+
+async function updateEtfTickers() {
+    etfs.forEach(async etf => {
+        const cardData = document.getElementById(etf)
+        let data = await fetchLatestQuote(etf)
+        if(data.currentPrice > data.previousClose) {
+            cardData.innerText = data.currentPrice.toFixed(2);
+            cardData.innerText += ' +' + (data.currentPrice - data.previousClose).toFixed(2);
+        } else if(data.currentPrice < data.previousClose) {
+            cardData.innerText = data.currentPrice;
+            cardData.innerText += ' -' + (data.previousClose - data.currentPrice).toFixed(2);
+        }
 
 
-   
+    })
+    
 
 }
 
-fetchLatestQuote('GME')
-fetchLatestQuote('AMC')
-fetchLatestQuote('QQQ')
-fetchLatestQuote('SPY')
-fetchLatestQuote('BB')
-fetchLatestQuote('SPCE')
-fetchLatestQuote('TSLA')
-console.log("Hi");
+updateEtfTickers();
 
+// (async () => {
+//     result = await fetchLatestQuote('GME')
+//     console.log("The result is: " + result.currentPrice)
+// })();
 
-
-// console.log("Here is the object: " + myQuote)
