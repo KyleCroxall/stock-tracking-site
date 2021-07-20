@@ -1,6 +1,6 @@
 const apiKey = '';
 const etfs = ['SPY', 'QQQ', 'IWM', 'DIA']
-const numOfArticles = 10;
+const numOfArticles = 25;
 
 async function fetchLatestQuote (ticker) {
     const url = `https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${apiKey}`
@@ -62,13 +62,20 @@ async function populateNewsDivs() {
     let newsData = await fetchLatestNews()
     let target = document.querySelector('.news-container')
     for(let i = 0; i < numOfArticles; i++) {
-        let div = document.createElement('div');
+        let anchorDiv = document.createElement('a');
         let titleDiv = document.createElement('div');
-        div.className = 'news-card'
-        div.appendChild(titleDiv)
+        let summaryDiv = document.createElement('div')
+        anchorDiv.className = 'news-card'
+        anchorDiv.href = '#'
+        anchorDiv.target = '_blank'
+        anchorDiv.href = newsData[i].url
         titleDiv.className = 'card-title'
+        summaryDiv.className = 'card-desc'
+        anchorDiv.appendChild(titleDiv)
+        anchorDiv.appendChild(summaryDiv)
+        target.appendChild(anchorDiv)
         titleDiv.innerText = newsData[i].headline;
-        target.appendChild(div)
+        summaryDiv.innerText = newsData[i].summary;
     }
 }
 
