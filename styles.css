@@ -116,20 +116,21 @@ main {
 }
 
 .card-desc {
-    font-size: 22px;
+    font-size: 1rem;
     font-weight: 400;
+    color: light
 }
 
 .news-container {
     background-image: linear-gradient(to bottom right, #e63946,#f48c06);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     max-width: 920px;
     margin: 30px auto 30px auto;
     padding: 12px;
     border-radius: 5px;
+    gap: 10px;
 }
 
 .news-card {
@@ -137,5 +138,11 @@ main {
     border-radius: 10px;
     padding: 10px;
     height: 150px;
-    min-width: 895px;
+    min-width: 400px;
+    max-width: 850px; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
