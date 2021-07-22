@@ -1,5 +1,6 @@
 const apiKey = '';
 const etfs = ['SPY', 'QQQ', 'IWM', 'DIA']
+const cryptoPairs = ['BTCUSDT', 'ETHUSDT', 'DOGEUSDT', 'ADAUSDT']
 const numOfArticles = 25;
 
 async function fetchLatestQuote (ticker) {
@@ -50,6 +51,56 @@ function getPercentageChange(oldPrice, newPrice) {
     }
 }
 
+function updateCryptoTickers() {
+    const socket = new WebSocket(`wss://ws.finnhub.io?token=${apiKey}`)
+
+    // Once connection established, subscribe to each WebSocket
+    socket.addEventListener('open', function(event) {
+        socket.send(JSON.stringify({'type': 'subscribe', 'symbol': `BINANCE:${cryptoPairs[0]}`}));
+        socket.send(JSON.stringify({'type': 'subscribe', 'symbol': `BINANCE:${cryptoPairs[1]}`}));
+        socket.send(JSON.stringify({'type': 'subscribe', 'symbol': `BINANCE:${cryptoPairs[2]}`}));
+        socket.send(JSON.stringify({'type': 'subscribe', 'symbol': `BINANCE:${cryptoPairs[3]}`}));
+    })
+
+    socket.addEventListener('message', function(event) {
+        const parsedEvent = JSON.parse(event.data)
+        const btcTicker = document.getElementById(cryptoPairs[0])
+        const ethTicker = document.getElementById(cryptoPairs[1])
+        const dogeTicker = document.getElementById(cryptoPairs[2])
+        const adaTicker = document.getElementById(cryptoPairs[3])
+
+        if(typeof parsedEvent.data !== undefined) {
+            console.log(parsedEvent.data[0].s, parsedEvent.data[0].p)
+            switch(parsedEvent.data[0].s) {
+                case 'BINANCE:BTCUSDT':
+                    btcTicker.innerText = parsedEvent.data[0].p
+                    break;
+                case 'BINANCE:ETHUSDT':
+                    ethTicker.innerText = parsedEvent.data[0].p
+                    break;
+                case 'BINANCE:DOGEUSDT':
+                    dogeTicker.innerText = parsedEvent.data[0].p
+                    break
+                case 'BINANCE:ADAUSDT':
+                    adaTicker.innerText = parsedEvent.data[0].p
+                    break;
+                default:
+                    console.log('Received unrecognised data.')
+                    break;
+            }
+        }
+        // switch(parsedEvent.data)
+        
+        // console.log(parsedEvent.data[0].p)
+        // btcTicker.innerText = parsedEvent.data[0].p
+        // const json = JSON.parse(event.data)
+        // console.log('Message from server is: ', event.data)
+        // console.log(json)
+    })
+
+    
+}
+
 async function fetchLatestNews() {
     const url = `https://finnhub.io/api/v1/news?category=general&token=${apiKey}`
     const response = await fetch(url);
@@ -85,6 +136,7 @@ updateEtfTickers();
 
 fetchLatestNews();
 
+updateCryptoTickers();
 
 
 // (async () => {
