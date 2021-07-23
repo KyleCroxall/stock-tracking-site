@@ -1,4 +1,4 @@
-const apiKey = '';
+const apiKey = ' ';
 const tdaKey = ''
 const etfs = ['SPY', 'QQQ', 'IWM', 'DIA']
 const cryptoPairs = ['BTCUSDT', 'ETHUSDT', 'DOGEUSDT', 'ADAUSDT']
