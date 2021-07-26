@@ -1,5 +1,5 @@
-const apiKey = 'c3po752ad3ifkq8h223g';
-const tdaKey = 'DFEAS8MOHAO1OXASBW82X1NAR3EB7U2R'
+const apiKey = '';
+const tdaKey = '';
 const etfs = ['SPY', 'QQQ', 'IWM', 'DIA']
 const cryptoPairs = ['BTCUSDT', 'ETHUSDT', 'DOGEUSDT', 'ADAUSDT']
 const numOfArticles = 25;
