@@ -1,6 +1,7 @@
 html { 
     box-sizing: border-box;
     font-size: 100%;
+    scroll-behavior: smooth;
 }
 
 *, *:before, *:after {
@@ -58,7 +59,9 @@ main {
     height: 100%;
     min-height: 100vh;
     background-color: #1d3b65;
-    display: block;
+    display: grid;
+    grid-template-columns: 1.5fr 4fr 1.5fr;
+    grid-template-rows: min-content min-content 2fr;
 }
 
 .highlight-text {
@@ -70,6 +73,8 @@ main {
 }
 
 .card-container {
+    grid-column: 2/3;
+    grid-row: 1/2;
     /* background-color: #bdb2ff; */
     background-image: linear-gradient(to bottom right, #e63946,#f48c06);
     /* width: 100%; */
@@ -90,6 +95,8 @@ main {
         border-radius: 0px;
     }
 }
+
+
 .card {
     padding: 10px;
     height: 115px;
@@ -107,6 +114,7 @@ main {
 
 .card-title {
     font-size: 1.2rem;
+    color: #000000;
 }
 
 .card-data {
@@ -120,11 +128,11 @@ main {
     font-size: 1rem;
     font-weight: 400;
     color: darkgrey;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .news-container {
+    grid-column: 2/3;
+    grid-row: 2/3;
     background-image: linear-gradient(to bottom right, #e63946,#f48c06);
     display: flex;
     flex-direction: column;
@@ -135,16 +143,17 @@ main {
     border-radius: 5px;
     gap: 10px;
     color: white;
+    
 }
 
 #top-news-title {
     text-align: left;
-    max-width: 850px;
+    max-width: 890px;
     width: 100%;
 }
 
 
-.news-card {
+/* .news-card {
     background-color: #ffffff;
     border-radius: 10px;
     padding: 10px;
@@ -159,5 +168,48 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
     text-decoration: none;
+} */
+
+.news-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    /* padding: 10px; */
+    height: 150px;
+    min-width: 400px;
+    /* max-width: 850px; */
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: 82% minmax(70px, 1fr);
 }
 
+.news-title {
+    padding: 15px 10px 0 15px;
+    align-self: center;
+}
+
+.news-desc {
+    padding: 0 10px 15px 15px;
+    align-self: center;
+}
+
+.news-img {
+    grid-row: span 2;
+    background: center / cover no-repeat;
+    /* background-image: url(./images/market-watch-logo.jpg); */
+    
+}
+
+.returnToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: pink;
+    cursor: pointer;
+    border: 0;
+}

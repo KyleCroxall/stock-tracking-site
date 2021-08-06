@@ -2,7 +2,20 @@ const apiKey = '';
 const tdaKey = '';
 const etfs = ['SPY', 'QQQ', 'IWM', 'DIA']
 const cryptoPairs = ['BTCUSDT', 'ETHUSDT', 'DOGEUSDT', 'ADAUSDT']
-const numOfArticles = 25;
+const numOfArticles = 15;
+
+var prevCryptoQuote = [0, 0, 0, 0];
+
+function returnToTop() {
+    // const htmlElement = document.documentElement;
+    // htmlElement.scrollTo({
+    //     top: 0,
+    //     left: 0,
+    //     behavior: 'smooth'
+    // })
+    window.scrollTo(0 ,0)
+
+}
 
 async function fetchLatestQuote (ticker) {
     const url = `https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${apiKey}`
@@ -72,31 +85,55 @@ function updateCryptoTickers() {
 
         if(typeof parsedEvent.data !== undefined) {
             console.log(parsedEvent.data[0].s, parsedEvent.data[0].p)
+            const currentQuote = parsedEvent.data[0].p
             switch(parsedEvent.data[0].s) {
                 case 'BINANCE:BTCUSDT':
-                    btcTicker.innerText = parsedEvent.data[0].p
+                    if(currentQuote > prevCryptoQuote[0]) {
+                        btcTicker.innerText = currentQuote + " ▲"
+                        btcTicker.style = "color: green; font-weight: 800"
+                    } else if(currentQuote < prevCryptoQuote[0]) {
+                        btcTicker.innerText = currentQuote + " ▼";
+                        btcTicker.style = "color: red; font-weight: 800"
+                    }
+                    prevCryptoQuote[0] = currentQuote
                     break;
                 case 'BINANCE:ETHUSDT':
-                    ethTicker.innerText = parsedEvent.data[0].p
+                    if(currentQuote > prevCryptoQuote[1]) {
+                        ethTicker.innerText = currentQuote + " ▲"
+                        ethTicker.style = "color: green; font-weight: 800"
+                    } else if(currentQuote < prevCryptoQuote[1]) {
+                        ethTicker.innerText = currentQuote + " ▼";
+                        ethTicker.style = "color: red; font-weight: 800"
+                    }
+                    prevCryptoQuote[1] = currentQuote
                     break;
                 case 'BINANCE:DOGEUSDT':
-                    dogeTicker.innerText = parsedEvent.data[0].p
+                    if(currentQuote > prevCryptoQuote[2]) {
+                        dogeTicker.innerText = currentQuote + " ▲"
+                        dogeTicker.style = "color: green; font-weight: 800"
+                    } else if(currentQuote < prevCryptoQuote[2]) {
+                        dogeTicker.innerText = currentQuote + " ▼";
+                        dogeTicker.style = "color: red; font-weight: 800"
+                    }
+                    prevCryptoQuote[2] = currentQuote
                     break
                 case 'BINANCE:ADAUSDT':
-                    adaTicker.innerText = parsedEvent.data[0].p
+                    if(currentQuote > prevCryptoQuote[3]) {
+                        adaTicker.innerText = currentQuote + " ▲"
+                        adaTicker.style = "color: green; font-weight: 800"
+                    } else if(currentQuote < prevCryptoQuote[3]) {
+                        adaTicker.innerText = currentQuote + " ▼";
+                        adaTicker.style = "color: red; font-weight: 800"
+                    }
+                    prevCryptoQuote[3] = currentQuote
                     break;
                 default:
                     console.log('Received unrecognised data.')
                     break;
             }
         }
-        // switch(parsedEvent.data)
+
         
-        // console.log(parsedEvent.data[0].p)
-        // btcTicker.innerText = parsedEvent.data[0].p
-        // const json = JSON.parse(event.data)
-        // console.log('Message from server is: ', event.data)
-        // console.log(json)
     })
 
     
@@ -117,13 +154,17 @@ async function populateNewsDivs() {
         let anchorDiv = document.createElement('a');
         let titleDiv = document.createElement('div');
         let summaryDiv = document.createElement('div')
+        let imgDiv = document.createElement('div')
         anchorDiv.className = 'news-card'
         anchorDiv.href = '#'
         anchorDiv.target = '_blank'
         anchorDiv.href = newsData[i].url
-        titleDiv.className = 'card-title'
-        summaryDiv.className = 'card-desc'
+        titleDiv.className = 'card-title news-title'
+        summaryDiv.className = 'card-desc news-desc'
+        imgDiv.className = 'news-img'
+        imgDiv.style.backgroundImage = `url(${newsData[i].image})`;
         anchorDiv.appendChild(titleDiv)
+        anchorDiv.appendChild(imgDiv)
         anchorDiv.appendChild(summaryDiv)
         target.appendChild(anchorDiv)
         titleDiv.innerText = newsData[i].headline;
